@@ -1,0 +1,49 @@
+@layer utilities {
+  .before-overlay-hover {
+    @apply relative overflow-hidden cursor-pointer;
+
+    /* before styles */
+  }
+
+  .before-overlay-hover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    transition: opacity 0.25s;
+  }
+
+  .before-overlay-hover:hover::before {
+    opacity: 0.12;
+  }
+}
+
+.icon-w-24 {
+  @apply w-[24px] h-[24px];
+}
+
+.flex-center {
+  @apply flex items-center justify-center;
+}
+
+.hover-overlay-bg {
+  @apply before:content-[''] before:absolute before:inset-0 before:bg-text-primary before:pointer-events-none before:opacity-0 hover:before:opacity-first;
+}
+
+.hover-bg-brand-primary {
+  @apply before:content-[''] before:absolute before:inset-0 before:bg-brand-primary before:pointer-events-none before:opacity-0 hover:before:opacity-first;
+}
+
+.focus-overlay-bg {
+  @apply after:content-[''] after:absolute after:inset-0 after:bg-text-primary after:pointer-events-none after:opacity-0 focus:after:opacity-first;
+}
+
+.border-gray {
+  @apply border-[1px] border-solid border-gray-3;
+}
+
+.outline-sky-blue {
+  @apply focus:outline-[1px] focus:outline-solid focus:outline-brand-sky-blue;
+}

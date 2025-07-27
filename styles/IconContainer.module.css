@@ -1,0 +1,28 @@
+.icon {
+  position: relative;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+}
+
+.icon::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: var(--transition, none);
+  background-color: var(--bg-color, var(--text-primary));
+}
+
+.icon:hover::before,
+.icon:focus::before {
+  opacity: var(--opacity, var(--opacity-first));
+}
+
+.icon:focus {
+  outline: var(--outline, none);
+}
