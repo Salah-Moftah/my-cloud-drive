@@ -1,41 +1,35 @@
-'use client';
+import { useMemo, useState } from "react";
 
-import { useState, useMemo } from "react";
+export const useSortData = (data) => {
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
 
-export const useSortData = (items, config = { key: "name", direction: "asc" }) => {
-  const [sortConfig, setSortConfig] = useState(config);
+  const sortedData = useMemo(() => {
+    if (!sortConfig.key) return data;
 
-  const sortedItems = useMemo(() => {
-    let sortableItems = [...items];
-    if (sortConfig !== null) {
-      sortableItems.sort((a, b) => {
-        let aVal = a[sortConfig.key];
-        let bVal = b[sortConfig.key];
+    const sorted = [...data].sort((a, b) => {
+      const aValue = a[sortConfig.key];
+      const bValue = b[sortConfig.key];
 
-        if (sortConfig.key.toLowerCase().includes("date") || aVal instanceof Date) {
-          aVal = new Date(aVal);
-          bVal = new Date(bVal);
-        }
+      if (aValue < bValue) return sortConfig.direction === "asc" ? -1 : 1;
+      if (aValue > bValue) return sortConfig.direction === "asc" ? 1 : -1;
+      return 0;
+    });
 
-        if (typeof aVal === "string") {
-          return sortConfig.direction === "asc"
-            ? aVal.localeCompare(bVal)
-            : bVal.localeCompare(aVal);
-        }
-
-        return sortConfig.direction === "asc" ? aVal - bVal : bVal - aVal;
-      });
-    }
-    return sortableItems;
-  }, [items, sortConfig]);
+    return sorted;
+  }, [data, sortConfig.key, sortConfig.direction]);
 
   const requestSort = (key) => {
-    let direction = "asc";
-    if (sortConfig.key === key && sortConfig.direction === "asc") {
-      direction = "desc";
-    }
-    setSortConfig({ key, direction });
+    setSortConfig((prev) => {
+      if (prev.key === key) {
+        return {
+          key,
+          direction: prev.direction === "asc" ? "desc" : "asc",
+        };
+      } else {
+        return { key, direction: "asc" };
+      }
+    });
   };
 
-  return { items: sortedItems, requestSort, sortConfig };
+  return { sortedData, requestSort, sortConfig };
 };

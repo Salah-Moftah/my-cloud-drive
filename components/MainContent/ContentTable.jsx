@@ -22,14 +22,7 @@ import { useClickOutSide } from "@/hooks/useClickOutside";
 const ContentTable = ({ files }) => {
   const { setFiles } = useFiles();
   const [selectedRowId, setSelectedRowId] = useState(null);
-  const {
-    items: sortedFiles,
-    requestSort,
-    sortConfig,
-  } = useSortData(files, {
-    key: "name",
-    direction: "asc",
-  });
+  const { sortedData, requestSort, sortConfig } = useSortData(files);
 
   const [sortMenuVisible, setSortMenuVisible] = useState(false);
 
@@ -151,7 +144,7 @@ const ContentTable = ({ files }) => {
           </tr>
         </thead>
         <tbody>
-          {sortedFiles.map((file) => (
+          {sortedData.map((file) => (
             <tr
               key={file._id}
               className={`row-hover-actions ${

@@ -69,7 +69,7 @@ const DropdownMenu = () => {
   return (
     <div
       ref={menuRef}
-      className={`absolute top-[60px] left-4 z-[999] bg-white rounded-md shadow-md w-[330px] max-h-[954px] py-2 transition-all duration-400 ease-in-out transform ${
+      className={`absolute top-[60px] left-4 z-[999] bg-white rounded-md shadow-1 w-[330px] max-h-[954px] py-2 transition-all duration-400 ease-in-out transform ${
         animationClass === "open"
           ? "opacity-100 translate-y-0 pointer-events-auto"
           : animationClass === "closing"
