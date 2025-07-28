@@ -19,8 +19,8 @@ import { IconContainer } from "@/components";
 import { useClickOutSide } from "@/hooks/useClickOutside";
 
 
-const ContentTable = ({ files }) => {
-  const { setFiles } = useFiles();
+const ContentTable = () => {
+  const { files, setFiles } = useFiles();
   const [selectedRowId, setSelectedRowId] = useState(null);
   const { sortedData, requestSort, sortConfig } = useSortData(files);
 

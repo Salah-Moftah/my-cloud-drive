@@ -14,25 +14,11 @@ import {
 } from "@/components";
 import { useViewMode } from "@/contexts/ViewModeContext";
 import { useFiles } from "@/contexts/GetFilesContext";
-import { useState } from "react";
 
 const MainContent = () => {
   const { files, loading } = useFiles();
   const { viewMode } = useViewMode();
-  const [ search ] = useState("");
-  const [ sortType ] = useState("date");
 
-  const filteredFiles = files.filter((file) =>
-    file.name.toLowerCase().includes(search.toLowerCase())
-  );
-
-  const sortedFiles = [...filteredFiles].sort((a, b) => {
-    if (sortType === "name") {
-      return a.name.localeCompare(b.name);
-    } else {
-      return new Date(b.createdAt) - new Date(a.createdAt);
-    }
-  });
 
   return (
     <>
@@ -44,15 +30,13 @@ const MainContent = () => {
           </div>
 
           <div className="flex items-center gap-[5px]">
-            <div>
-              <ToggleSwitch />
-            </div>
-
+            <ToggleSwitch />
             <IconContainer size="32px">
               <IoMdInformationCircleOutline size={20} />
             </IconContainer>
           </div>
         </div>
+
         <div className="flex items-center pl-[20px] gap-[10px]">
           {filterList.map((n) => (
             <FilterDropdown key={n.id} name={n.name} />
@@ -62,12 +46,12 @@ const MainContent = () => {
 
       {loading ? (
         <Loader />
-      ) : sortedFiles.length === 0 ? (
+      ) : files.length === 0 ? (
         <p>No files uploaded.</p>
       ) : viewMode === "list" ? (
-        <ContentTable files={sortedFiles} />
+        <ContentTable />
       ) : (
-        <ContentGrid files={sortedFiles} />
+        <ContentGrid />
       )}
     </>
   );
